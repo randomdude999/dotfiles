@@ -8,5 +8,5 @@ cp ~/.config/fish/fishfile ./fisherman_plugins
 cp ~/.vimrc ./vimrc
 cp ~/.newsbeuter/urls ./newsbeuter_urls
 cp ~/.gitconfig ./gitconfig
-cp ~/.config/fish ./fish
-cp ~/.config/roxterm.sourceforge.net ./roxterm
+cp -r ~/.config/fish ./fish
+cp -r ~/.config/roxterm.sourceforge.net ./roxterm
