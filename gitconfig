@@ -1,0 +1,11 @@
+[user]
+	name = randomdude999
+	email = just.so.you.can.email.me@gmail.com
+[creditenal]
+	helper = cache --timeout=3600
+[push]
+	default = simple
+[credential "https://github.com"]
+    username = randomdude999
+[credential "https://gist.github.com"]
+    username = randomdude999

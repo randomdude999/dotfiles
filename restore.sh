@@ -9,10 +9,8 @@ sudo -H pip install -r pip-pkgs
 echo "\e[0;33mCopying dotfiles...\e[0m\n"
 cp -Tv vimrc ~/.vimrc
 cp -Tv gitconfig ~/.gitconfig
-mkdir -pv ~/.newsbeuter
-mkdir -pv ~/.config
-cp -Tv newsbeuter_urls ~/.newsbeuter/urls
-cp -Tv fish ~/.config/fish
+mkdir -pv ~/.config/fish
+cp -Tv fish_config ~/.config/fish/config.fish
 cp -Tv roxterm ~/.config/roxterm.sourceforge.net
 
 echo "\e[0;33mInstalling fish plugins...\e[0m\n"

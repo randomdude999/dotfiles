@@ -1,0 +1,10 @@
+#!/usr/bin/fish
+
+set PATH ~/.local/bin $PATH
+
+function fish_greeting
+    fortune debian-hints ubuntu-server-tips
+end
+
+set -x GOPATH $HOME/.go
+set -x PATH $GOPATH $GOPATH/bin $PATH
