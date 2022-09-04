@@ -14,8 +14,7 @@ cd "$(dirname "$0")"
 
 check zprofile ~/.zprofile
 check zshrc ~/.zshrc
-#checkc nvim/coc-settings.json
-#checkc nvim/init.vim
+check mine.zsh-theme ~/.config/oh-my-zsh/custom/themes/mine.zsh-theme
 checkc nvim
 checkc waybar
 checkc sway/config
