@@ -1,0 +1,7 @@
+color=000000
+fade-in=5
+grace=5
+clock
+indicator-idle-visible
+datestr=%Y-%m-%d
+font=Droid Sans Mono

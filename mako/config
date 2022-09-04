@@ -1,0 +1,5 @@
+max-history=50
+font=monospace 8
+max-icon-size=32
+height=300
+default-timeout=10000
