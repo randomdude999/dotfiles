@@ -2,6 +2,7 @@
     /* `otf-font-awesome` is required to be installed for icons */
     font-family: FontAwesome, Droid Sans Mono, Roboto, Helvetica, Arial, sans-serif;
     font-size: 12px;
+    border-radius: 0;
 }
 
 window#waybar {

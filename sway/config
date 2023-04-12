@@ -21,10 +21,13 @@ set $term alacritty
 #set $menu dmenu_path | dmenu | xargs swaymsg exec --
 set $menu bemenu-run
 
+# display name of my external monitor
+set $extdisp DP-1
+
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+output * bg ~/img/wall.png fill
 #
 # Example configuration:
 #
@@ -33,30 +36,25 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
 ### Idle configuration
-set $dispon 'swaymsg "output * dpms on"'
-set $dispoff 'swaymsg "output * dpms off"'
+set $dispon 'swaymsg "output eDP-1 dpms on"'
+set $dispoff 'swaymsg "output eDP-1 dpms off"'
 set $islocked 'pgrep swaylock >/dev/null'
 # too fucking broken
-#exec swayidle -w \
-#    timeout 20 $islocked" && "$dispoff resume $islocked" && "$dispon \
-#    timeout 300 'swaylock -f' \
-#    timeout 320 $dispoff \
-#    before-sleep 'swaylock -f --fade-in=0 --grace=0'
+exec swayidle -w \
+    timeout 20 $islocked" && "$dispoff resume $islocked" && "$dispon \
+    timeout 300 'swaylock -f' \
+    timeout 320 $dispoff \
+    before-sleep 'swaylock -f --fade-in=0 --grace=0'
 # no dispon for timeout 320 because it gets handled by the timeout 20 already
-exec swayidle -w timeout 300 'swaylock -f' before-sleep 'swaylock -f --fade-in=0 --grace=0'
+#exec swayidle -w timeout 300 'swaylock -f' before-sleep 'swaylock -f --fade-in=0 --grace=0'
 bindsym Ctrl+Mod1+l exec swaylock -f --fade-in=0 --grace=0
 
 ### Input configuration
 
-# manually specified both of the keyboards i actually use to work around
-# https://github.com/swaywm/sway/issues/6654
-input 1:1:AT_Translated_Set_2_keyboard {
+input * {
     xkb_layout ee
-    xkb_variant nodeadkeys
-}
-input 1241:41437:HOLTEK_USB-HID_Keyboard {
-    xkb_layout ee
-    xkb_variant nodeadkeys
+    xkb_variant us
+    # xkb_variant nodeadkeys
 }
 
 ### Key bindings
@@ -225,36 +223,36 @@ for_window [class="discord"] border none
 for_window [class="Celeste.bin.x86_64"] border none
 for_window [class="Minecraft"] border none
 for_window [class="SuperGame_NFML"] border none
+for_window [app_id="lxqt-policykit-agent"] floating enable
 assign [class="discord"] 3
-assign [app_id="firefox"] 2
+# assign [app_id="firefox"] 2
 assign [app_id="thunderbird"] 4
-workspace 1 output HDMI-A-1 primary
-workspace 2 output HDMI-A-1 primary
+workspace 1 output $extdisp primary
+workspace 2 output $extdisp primary
 workspace 3 output eDP-1 primary
-workspace 4 output HDMI-A-1 primary
-workspace 5 output HDMI-A-1 primary
+workspace 4 output $extdisp primary
+workspace 5 output $extdisp primary
 
 # custom bindings
 bindsym $mod+Mod1+Left move workspace to left
 bindsym $mod+Mod1+Right move workspace to right
-#bindsym $mod+asciicircum exec dunstctl history-pop
-bindsym $mod+asciicircum exec makoctl restore
+bindsym $mod+grave exec makoctl restore
 bindsym $mod+ctrl+Down exec playerctl play-pause
 bindsym $mod+ctrl+Right exec playerctl next
 bindsym $mod+ctrl+Left exec playerctl previous
 bindsym $mod+ctrl+2 exec pactl set-sink-volume @DEFAULT_SINK@ +2%
 bindsym $mod+ctrl+1 exec pactl set-sink-volume @DEFAULT_SINK@ -2%
-bindsym $mod+ctrl+asciicircum exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym $mod+ctrl+grave exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +2%
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -2%
 bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
-bindsym Print exec grim -g "$(slurp)" - | wl-copy
+bindsym --no-repeat Print exec grim -g "$(slurp)" - | wl-copy
 bindsym Shift+Print exec grim - | wl-copy
-bindsym $mod+Shift+plus exec i3mov.sh move -10
-bindsym $mod+Shift+apostrophe exec i3mov.sh move 10
-bindsym $mod+plus exec i3mov.sh go -10
-bindsym $mod+apostrophe exec i3mov.sh go 10
+bindsym $mod+Shift+bracketleft exec i3mov.sh move -10
+bindsym $mod+Shift+bracketright exec i3mov.sh move 10
+bindsym $mod+bracketleft exec i3mov.sh go -10
+bindsym $mod+bracketright exec i3mov.sh go 10
 bindsym XF86MonBrightnessDown exec brightnessctl -c backlight -e set 10%-
 bindsym XF86MonBrightnessUp exec brightnessctl -c backlight -e set 10%+
 
@@ -267,12 +265,13 @@ focus_on_window_activation urgent
 # utility autostarts
 exec waybar
 exec mako
-exec gammastep-indicator -l 59:24 -t 6500:2000
+exec gammastep-indicator -l 59:24 -t 6500:2700
 exec nm-applet --indicator
 exec blueman-applet
+exec lxqt-policykit-agent
 # exec pasystray
 
 # app autostarts
 # exec discord
-exec firefox
+exec ff
 exec thunderbird

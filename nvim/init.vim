@@ -1,11 +1,39 @@
+" not sure if this needs to be before the Plug call, putting it here just in
+" case
+"let g:AutoPairsMapCR = 0
 
+" load plugins
 call plug#begin()
 Plug 'rhysd/git-messenger.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'morhetz/gruvbox'
+Plug 'lervag/vimtex'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'luochen1990/rainbow'
+"Plug 'jiangmiao/auto-pairs'
 call plug#end()
+
+let g:UltiSnipsExpandTrigger="<c-l>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:rainbow_active = 1
+
+let g:rainbow_conf = {
+\	'guifgs': ['#fb4934', '#b8bb26', '#fabd2f', '#83a598', '#d3869b', '#8ec07c', '#fe8019'],
+\	'guis': ['bold'],
+\	'cterms': [''],
+\	'operators': '',
+\	'parentheses': ['start=/(/ end=/)/ fold'],
+\	'separately': {
+\		'*': 0,
+\		'lisp': {},
+\		'scheme': {},
+\	}
+\}
 
 " always keep 5 lines visible from top/bottom
 set scrolloff=5
@@ -15,6 +43,7 @@ set number relativenumber
 
 " enable everything mouse-related
 set mouse=a
+set mousemodel=extend
 
 " enable smart case-sensitivity
 set ignorecase smartcase
@@ -34,6 +63,17 @@ au Filetype make,c,cpp set noexpandtab tabstop=4 softtabstop=4
 " nicer command autocomplete
 set wildmenu wildmode=longest:full,full
 
+" true colors
+set termguicolors
+" colorscheme
+" also manually override some of the highlight groups
+autocmd vimenter * ++nested colorscheme gruvbox |
+    \ hi! link CocInlayHint GruvboxBg3 |
+    \ hi! link CocHintVirtualText GruvboxBg3
+" colorscheme configuration
+set background=dark
+let g:gruvbox_contrast_dark = "hard"
+
 " " pressing tab shows completion where appropriate
 " function! InsertTabWrapper()
 "     let col = col('.') - 1
@@ -49,6 +89,7 @@ set wildmenu wildmode=longest:full,full
 " allow comments in json files
 autocmd FileType json syntax match Comment +\/\/.\+$+
 
+" sage file type
 autocmd BufNewFile,BufRead *.sage set filetype=python
 
 " always set window title
@@ -114,4 +155,19 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 " Symbol renaming.
 nmap <leader>r <Plug>(coc-rename)
 
+" ---
+" vimtex options
+" ---
 
+let g:vimtex_compiler_latexmk = {
+    \ 'options' : [
+    \    '-shell-escape',
+    \    '-verbose',
+    \    '-file-line-error',
+    \    '-synctex=1',
+    \    '-interaction=nonstopmode',
+    \ ],
+    \ 'build_dir': 'out'
+    \}
+
+let g:vimtex_view_method = 'zathura'

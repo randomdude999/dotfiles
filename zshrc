@@ -69,6 +69,8 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 ZSH_COMPDUMP="$HOME/.cache/zcompdump-$HOST-$ZSH_VERSION"
 
 HISTFILE=$XDG_DATA_HOME/zsh_history
+HISTSIZE=10000000
+SAVEHIST=10000000
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
@@ -111,11 +113,29 @@ setopt autocontinue
 unsetopt share_history
 setopt inc_append_history
 
-source /usr/share/doc/pkgfile/command-not-found.zsh
+# source /usr/share/doc/pkgfile/command-not-found.zsh
 source /usr/share/fzf/completion.zsh
 source /usr/share/fzf/key-bindings.zsh
 
+# i wrote my own faster pkgfile replacement
+# https://github.com/randomdude999/pkgfile-tiny
+command_not_found_handler() {
+  local pkgs cmd="$1"
+
+  pkgs=(${(f)"$(pkgfile-tiny "$cmd" 2>/dev/null)"})
+  if [[ -n "$pkgs" ]]; then
+    printf '%s may be found in the following packages:\n' "$cmd"
+    printf '  %s\n' $pkgs[@]
+  else
+    printf 'zsh: command not found: %s\n' "$cmd"
+  fi 1>&2
+
+  return 127
+}
+
 export EDITOR=nvim PAGER=less
+
+export BAT_THEME=gruvbox-dark
 
 cl() {
     cd "$1" && ls
@@ -134,3 +154,36 @@ alias ip="ip -color=auto"
 if [ -f ~/.config/zshrc_local ]; then
     . ~/.config/zshrc_local
 fi
+
+# make foot start a new terminal in the right directory
+function osc7 {
+    local LC_ALL=C
+    export LC_ALL
+
+    setopt localoptions extendedglob
+    input=( ${(s::)PWD} )
+    uri=${(j::)input/(#b)([^A-Za-z0-9_.\!~*\'\(\)-\/])/%${(l:2::0:)$(([##16]#match))}}
+    print -n "\e]7;file://${HOSTNAME}${uri}\e\\"
+}
+add-zsh-hook -Uz chpwd osc7
+
+# gruvbox on the linux console
+# i just stuck this in /etc/issue actually
+function gruv {
+echo -en "\e]P01d2021"
+echo -en "\e]P1cc241d"
+echo -en "\e]P298971a"
+echo -en "\e]P3d79921"
+echo -en "\e]P4458588"
+echo -en "\e]P5b16286"
+echo -en "\e]P6689d6a"
+echo -en "\e]P7a89984"
+echo -en "\e]P8928374"
+echo -en "\e]P9fb4934"
+echo -en "\e]PAb8bb26"
+echo -en "\e]PBfabd2f"
+echo -en "\e]PC83a598"
+echo -en "\e]PDd3869b"
+echo -en "\e]PE8ec07c"
+echo -en "\e]PFebdbb2"
+}
