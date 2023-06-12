@@ -14,6 +14,7 @@ Plug 'lervag/vimtex'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'luochen1990/rainbow'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 "Plug 'jiangmiao/auto-pairs'
 call plug#end()
 
@@ -147,6 +148,16 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
+" Use K to show documentation in preview window
+nnoremap <silent> K :call ShowDocumentation()<CR>
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
 nmap <leader>a  <Plug>(coc-codeaction)
 
 " Highlight the symbol and its references when holding the cursor.
@@ -171,3 +182,16 @@ let g:vimtex_compiler_latexmk = {
     \}
 
 let g:vimtex_view_method = 'zathura'
+
+
+" tree-sitter configuration
+lua << EOF
+require'nvim-treesitter.configs'.setup {
+    ensure_installed = { "html", "javascript" },
+    highlight = {
+        enable = true,
+    },
+    additional_vim_regex_highlighting = false,
+}
+
+EOF

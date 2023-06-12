@@ -57,6 +57,12 @@ input * {
     # xkb_variant nodeadkeys
 }
 
+input 2:14:ETPS/2_Elantech_Touchpad {
+    tap enabled
+    tap_button_map lrm
+    drag enabled
+}
+
 ### Key bindings
 #
 # Basics:
@@ -224,6 +230,7 @@ for_window [class="Celeste.bin.x86_64"] border none
 for_window [class="Minecraft"] border none
 for_window [class="SuperGame_NFML"] border none
 for_window [app_id="lxqt-policykit-agent"] floating enable
+for_window [class="KiCad" title=".* Footprint Library Browser"] floating enable
 assign [class="discord"] 3
 # assign [app_id="firefox"] 2
 assign [app_id="thunderbird"] 4
@@ -232,6 +239,10 @@ workspace 2 output $extdisp primary
 workspace 3 output eDP-1 primary
 workspace 4 output $extdisp primary
 workspace 5 output $extdisp primary
+
+# flameshot fix
+for_window [app_id="flameshot"] floating enable, fullscreen disable
+for_window [app_id="flameshot" title="flameshot"] move absolute position 0 0
 
 # custom bindings
 bindsym $mod+Mod1+Left move workspace to left
@@ -247,8 +258,7 @@ bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +2%
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -2%
 bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
-bindsym --no-repeat Print exec grim -g "$(slurp)" - | wl-copy
-bindsym Shift+Print exec grim - | wl-copy
+bindsym --no-repeat Print exec flameshot gui
 bindsym $mod+Shift+bracketleft exec i3mov.sh move -10
 bindsym $mod+Shift+bracketright exec i3mov.sh move 10
 bindsym $mod+bracketleft exec i3mov.sh go -10
@@ -269,6 +279,7 @@ exec gammastep-indicator -l 59:24 -t 6500:2700
 exec nm-applet --indicator
 exec blueman-applet
 exec lxqt-policykit-agent
+exec flameshot
 # exec pasystray
 
 # app autostarts

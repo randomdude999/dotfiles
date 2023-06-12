@@ -34,6 +34,12 @@ export MOZ_ENABLE_WAYLAND=1
 # literally what
 export MOZ_DISABLE_RDD_SANDBOX=1
 
+# set the default browser (xdg-settings get default-web-browser is already
+# correct, but python's webbrowser module is buggy when not setting this
+# variable too) (specifically it gets confused about both firefox and
+# firefox-developer-edition coexisting, and defaults to firefox)
+export BROWSER=firefox-developer-edition
+
 # qt5/6 dark theme
 export QT_QPA_PLATFORMTHEME=qt5ct
 
@@ -41,5 +47,6 @@ export QT_QPA_PLATFORMTHEME=qt5ct
 export _JAVA_AWT_WM_NONREPARENTING=1
 
 if [ -z "$WAYLAND_DISPLAY" ] && [ 1 -eq "$XDG_VTNR" ]; then
+    export XDG_CURRENT_DESKTOP=sway
     exec sway
 fi
