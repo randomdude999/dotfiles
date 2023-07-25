@@ -5,7 +5,7 @@
     // "width": 1280, // Waybar width
     "spacing": 0, // Gaps between modules (4px)
     // Choose the order of the modules
-    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-left": ["sway/workspaces", "sway/mode", "sway/window"],
     "modules-center": [],
     "modules-right": ["pulseaudio", "network#eth", "network#wlan", "cpu", "memory", "temperature", "battery", "clock", "tray"],
     // Modules configuration
@@ -35,6 +35,8 @@
     },
     "sway/mode": {
         "format": "{}"
+    },
+    "sway/window": {
     },
     "mpd": {
         "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",

@@ -5,3 +5,5 @@ clock
 indicator-idle-visible
 datestr=%Y-%m-%d
 font=Droid Sans Mono
+inside-color=700070
+text-color=ffffff

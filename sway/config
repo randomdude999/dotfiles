@@ -21,25 +21,26 @@ set $term alacritty
 #set $menu dmenu_path | dmenu | xargs swaymsg exec --
 set $menu bemenu-run
 
-# display name of my external monitor
-set $extdisp DP-1
-
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg ~/img/wall.png fill
+#output * bg ~/img/wall.png fill
 #
 # Example configuration:
 #
 #   output HDMI-A-1 resolution 1920x1080 position 1920,0
 #
 # You can get the names of your outputs by running: swaymsg -t get_outputs
+output eDP-1 position 0,0
+set $mon1 "Dell Inc. DELL U2412M Y1H5T25L1THL"
+set $mon2 "Dell Inc. DELL U2412M 30WJ15AQ0B4L"
+output $mon1 position 1920,0
+output $mon2 position 3840,0
 
 ### Idle configuration
 set $dispon 'swaymsg "output eDP-1 dpms on"'
 set $dispoff 'swaymsg "output eDP-1 dpms off"'
 set $islocked 'pgrep swaylock >/dev/null'
-# too fucking broken
 exec swayidle -w \
     timeout 20 $islocked" && "$dispoff resume $islocked" && "$dispon \
     timeout 300 'swaylock -f' \
@@ -55,6 +56,7 @@ input * {
     xkb_layout ee
     xkb_variant us
     # xkb_variant nodeadkeys
+	xkb_options ctrl:nocaps
 }
 
 input 2:14:ETPS/2_Elantech_Touchpad {
@@ -224,21 +226,19 @@ bindsym $mod+r mode "resize"
 include /etc/sway/config.d/*
 
 # window assignments
-for_window [app_id="firefox"] border none
+# for_window [app_id="firefox"] border none
 for_window [class="discord"] border none
 for_window [class="Celeste.bin.x86_64"] border none
 for_window [class="Minecraft"] border none
 for_window [class="SuperGame_NFML"] border none
 for_window [app_id="lxqt-policykit-agent"] floating enable
 for_window [class="KiCad" title=".* Footprint Library Browser"] floating enable
-assign [class="discord"] 3
-# assign [app_id="firefox"] 2
+assign [app_id="firefox"] 2
 assign [app_id="thunderbird"] 4
-workspace 1 output $extdisp primary
-workspace 2 output $extdisp primary
-workspace 3 output eDP-1 primary
-workspace 4 output $extdisp primary
-workspace 5 output $extdisp primary
+workspace 1 output $mon1
+workspace 2 output $mon2
+# workspace 3 output eDP-1
+workspace 4 output $mon2
 
 # flameshot fix
 for_window [app_id="flameshot"] floating enable, fullscreen disable
@@ -272,6 +272,9 @@ font pango:monospace 8
 titlebar_padding 3
 focus_on_window_activation urgent
 
+default_border pixel 2
+smart_borders on
+
 # utility autostarts
 exec waybar
 exec mako
@@ -284,5 +287,5 @@ exec flameshot
 
 # app autostarts
 # exec discord
-exec ff
+exec firefox
 exec thunderbird

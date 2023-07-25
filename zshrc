@@ -79,6 +79,9 @@ SAVEHIST=10000000
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git colored-man-pages history-substring-search sudo themes)
 
+# hack to make colored-man-pages work again with the new fancy groff
+export GROFF_NO_SGR=1
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -156,16 +159,16 @@ if [ -f ~/.config/zshrc_local ]; then
 fi
 
 # make foot start a new terminal in the right directory
-function osc7 {
-    local LC_ALL=C
-    export LC_ALL
+#function osc7 {
+#    local LC_ALL=C
+#    export LC_ALL
 
-    setopt localoptions extendedglob
-    input=( ${(s::)PWD} )
-    uri=${(j::)input/(#b)([^A-Za-z0-9_.\!~*\'\(\)-\/])/%${(l:2::0:)$(([##16]#match))}}
-    print -n "\e]7;file://${HOSTNAME}${uri}\e\\"
-}
-add-zsh-hook -Uz chpwd osc7
+#    setopt localoptions extendedglob
+#    input=( ${(s::)PWD} )
+#    uri=${(j::)input/(#b)([^A-Za-z0-9_.\!~*\'\(\)-\/])/%${(l:2::0:)$(([##16]#match))}}
+#    print -n "\e]7;file://${HOSTNAME}${uri}\e\\"
+#}
+#add-zsh-hook -Uz chpwd osc7
 
 # gruvbox on the linux console
 # i just stuck this in /etc/issue actually

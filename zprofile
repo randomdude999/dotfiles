@@ -38,7 +38,7 @@ export MOZ_DISABLE_RDD_SANDBOX=1
 # correct, but python's webbrowser module is buggy when not setting this
 # variable too) (specifically it gets confused about both firefox and
 # firefox-developer-edition coexisting, and defaults to firefox)
-export BROWSER=firefox-developer-edition
+export BROWSER=firefox
 
 # qt5/6 dark theme
 export QT_QPA_PLATFORMTHEME=qt5ct
