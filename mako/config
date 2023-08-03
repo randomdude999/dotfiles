@@ -4,7 +4,6 @@ max-icon-size=32
 height=300
 default-timeout=0
 ignore-timeout=1
-layer=overlay
 
 [mode=dnd]
 invisible=1

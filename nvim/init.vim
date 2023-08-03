@@ -15,6 +15,7 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'luochen1990/rainbow'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/playground'
 "Plug 'jiangmiao/auto-pairs'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'nvim-lua/plenary.nvim'
@@ -135,6 +136,7 @@ nmap ]c :Gitsigns next_hunk<CR>
 nmap [c :Gitsigns prev_hunk<CR>
 
 nmap <C-T> :tab split<CR>
+map <C-Q> :py3f /usr/share/clang/clang-format.py<CR>
 
 " ----------------
 " Keybinds for coc
@@ -212,7 +214,7 @@ let g:vimtex_view_method = 'zathura'
 " tree-sitter configuration
 lua << EOF
 require'nvim-treesitter.configs'.setup {
-    ensure_installed = { "html", "javascript" },
+    ensure_installed = { "html", "javascript", "rust", "cpp", "query" },
     highlight = {
         enable = true,
     },
