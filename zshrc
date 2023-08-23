@@ -79,9 +79,6 @@ SAVEHIST=10000000
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git colored-man-pages history-substring-search sudo themes)
 
-# hack to make colored-man-pages work again with the new fancy groff
-export GROFF_NO_SGR=1
-
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
