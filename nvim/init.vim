@@ -16,12 +16,19 @@ Plug 'honza/vim-snippets'
 Plug 'luochen1990/rainbow'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 "Plug 'jiangmiao/auto-pairs'
+Plug 'lewis6991/gitsigns.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'tpope/vim-eunuch'
 call plug#end()
 
 let g:UltiSnipsExpandTrigger="<c-l>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 let g:rainbow_active = 1
+let g:git_messenger_no_default_mappings = v:true
+nmap <leader>b <Plug>(git-messenger)
 
 let g:rainbow_conf = {
 \	'guifgs': ['#fb4934', '#b8bb26', '#fabd2f', '#83a598', '#d3869b', '#8ec07c', '#fe8019'],
@@ -74,6 +81,7 @@ autocmd vimenter * ++nested colorscheme gruvbox |
 " colorscheme configuration
 set background=dark
 let g:gruvbox_contrast_dark = "hard"
+let g:gruvbox_invert_selection = 0
 
 " " pressing tab shows completion where appropriate
 " function! InsertTabWrapper()
@@ -102,14 +110,24 @@ set updatetime=300
 set notimeout ttimeout
 
 " always show signcolumn
-set signcolumn=number
+"set signcolumn=number
+set signcolumn=yes:1
 
 " disable middle click paste
 map <MiddleMouse> <Nop>
 imap <MiddleMouse> <Nop>
 
 " fzf shortcuts
-nmap <leader>o :GFiles<CR>
+nmap <leader>o :Telescope git_files<CR>
+nmap <leader>O :Telescope find_files<CR>
+nmap <leader>g :Telescope live_grep<CR>
+nmap <leader>l :Telescope resume<CR>
+
+" gitsigns shortcuts
+nmap ]c :Gitsigns next_hunk<CR>
+nmap [c :Gitsigns prev_hunk<CR>
+
+nmap <C-T> :tab split<CR>
 
 
 " ----------------
@@ -147,6 +165,7 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nmap <silent> <leader>i :CocCommand clangd.switchSourceHeader<CR>
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call ShowDocumentation()<CR>
@@ -194,4 +213,17 @@ require'nvim-treesitter.configs'.setup {
     additional_vim_regex_highlighting = false,
 }
 
+
+require('gitsigns').setup()
+require('telescope').setup {
+    extensions = {
+        fzf = {
+            fuzzy = true,
+            override_generic_sorter = true,
+            override_file_sorter = true,
+            case_mode = "smart_case",
+        }
+    }
+}
+require('telescope').load_extension('fzf')
 EOF

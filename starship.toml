@@ -1,0 +1,20 @@
+add_newline = false
+
+format = """$username\
+$hostname\
+$directory\
+$git_branch\
+$git_commit\
+$git_status\
+$character"""
+
+[character]
+success_symbol = '[>](bold green)'
+error_symbol = '[>](bold red)'
+
+[directory]
+# this makes the prompt extremely slow in sshfs, even when not in a git repo
+truncate_to_repo = false
+
+[directory.substitutions]
+'~/srv/' = ''
