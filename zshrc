@@ -1,6 +1,8 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+export PATH=~/.pack/bin:$PATH
+
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.config/oh-my-zsh"
 
@@ -77,7 +79,10 @@ SAVEHIST=10000000
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git colored-man-pages history-substring-search sudo themes)
+plugins=(git colored-man-pages history-substring-search sudo themes zsh-autosuggestions zsh-syntax-highlighting)
+
+# hack for colored-man-pages
+export GROFF_NO_SGR=1
 
 source $ZSH/oh-my-zsh.sh
 
@@ -151,6 +156,8 @@ alias la="ls -la -h"
 alias xd="hexdump -C"
 alias ip="ip -color=auto"
 
+alias idvi="vi --cmd 'let g:useCoc = 0'"
+
 if [ -f ~/.config/zshrc_local ]; then
     . ~/.config/zshrc_local
 fi
@@ -166,24 +173,3 @@ function osc7 {
     print -n "\e]7;file://${HOSTNAME}${uri}\e\\"
 }
 add-zsh-hook -Uz chpwd osc7
-
-# gruvbox on the linux console
-# i just stuck this in /etc/issue actually
-function gruv {
-echo -en "\e]P01d2021"
-echo -en "\e]P1cc241d"
-echo -en "\e]P298971a"
-echo -en "\e]P3d79921"
-echo -en "\e]P4458588"
-echo -en "\e]P5b16286"
-echo -en "\e]P6689d6a"
-echo -en "\e]P7a89984"
-echo -en "\e]P8928374"
-echo -en "\e]P9fb4934"
-echo -en "\e]PAb8bb26"
-echo -en "\e]PBfabd2f"
-echo -en "\e]PC83a598"
-echo -en "\e]PDd3869b"
-echo -en "\e]PE8ec07c"
-echo -en "\e]PFebdbb2"
-}

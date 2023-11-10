@@ -5,9 +5,9 @@
     // "width": 1280, // Waybar width
     "spacing": 0, // Gaps between modules (4px)
     // Choose the order of the modules
-    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-left": ["sway/workspaces", "sway/mode", "sway/window"],
     "modules-center": [],
-    "modules-right": ["pulseaudio", "network#eth", "network#wlan", "cpu", "memory", "temperature", "battery", "clock", "tray"],
+    "modules-right": ["pulseaudio", "network#ethI", "network#ethD", "network#wlan", "cpu", "memory", "temperature", "battery", "clock", "tray"],
     // Modules configuration
     "sway/workspaces": {
     //     "disable-scroll": true,
@@ -76,7 +76,7 @@
     "clock": {
         // "timezone": "America/New_York",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format": "{:%Y-%m-%d %H:%M:%S}",
+        "format": "{:%Y-%m-%d %H:%M:%OS}",
         "interval": 1
     },
     "cpu": {
@@ -120,7 +120,8 @@
         "format-alt": "{time} {icon}",
         // "format-good": "", // An empty format will hide the module
         // "format-full": "",
-        "format-icons": ["", "", "", "", ""]
+        "format-icons": ["", "", "", "", ""],
+        "interval": 10
     },
     "battery#bat2": {
         "bat": "BAT2"
@@ -135,8 +136,16 @@
         "format-disconnected": "⚠ Disconnected"
         //"format-alt": "{ifname}: {ipaddr}/{cidr}"
     },
-    "network#eth": {
-        "interface": "en*",
+    "network#ethD": {
+        "interface": "enp5*",
+        "interval": 2,
+        "format-ethernet": " {ipaddr}",
+        "tooltip-format": "{ifname} via {gwaddr} ",
+        "format-linked": " {ifname} (No IP)",
+        "format-disconnected": ""
+    },
+    "network#ethI": {
+        "interface": "enp2*",
         "interval": 2,
         "format-ethernet": " {ipaddr}",
         "tooltip-format": "{ifname} via {gwaddr} ",

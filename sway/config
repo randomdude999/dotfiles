@@ -19,7 +19,7 @@ set $term alacritty
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
 #set $menu dmenu_path | dmenu | xargs swaymsg exec --
-set $menu bemenu-run
+set $menu rofi -show drun
 
 # display name of my external monitor
 set $extdisp DP-1
@@ -55,12 +55,17 @@ input * {
     xkb_layout ee
     xkb_variant us
     # xkb_variant nodeadkeys
+    xkb_options ctrl:nocaps
 }
 
 input 2:14:ETPS/2_Elantech_Touchpad {
     tap enabled
     tap_button_map lrm
     drag enabled
+}
+
+input 2:14:ETPS/2_Elantech_TrackPoint {
+    pointer_accel 0.5
 }
 
 ### Key bindings
@@ -271,6 +276,9 @@ smart_borders on
 font pango:monospace 8
 titlebar_padding 3
 focus_on_window_activation urgent
+default_border pixel 2
+gaps inner 10
+smart_gaps on
 
 # utility autostarts
 exec waybar

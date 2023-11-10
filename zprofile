@@ -48,5 +48,5 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 
 if [ -z "$WAYLAND_DISPLAY" ] && [ 1 -eq "$XDG_VTNR" ]; then
     export XDG_CURRENT_DESKTOP=sway
-    exec sway
+    exec sway -d >~/swaylog.txt 2>&1
 fi
